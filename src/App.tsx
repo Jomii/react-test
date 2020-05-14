@@ -1,16 +1,22 @@
 import React, { useState } from 'react';
 import Table from './components/Table';
+import { Form, FormValues } from './components/Form';
 import { api } from './api';
 import './App.css';
 
-function App() {
+const App: React.FC = () => {
   const [participants, setParticipants] = useState(api.Participants);
+
+  function addParticipant(newParticipant: FormValues) {
+    console.log(newParticipant)
+  }
 
   return (
     <div className="App">
       <h1>Header</h1>
       <div className="content">
         <h2>List of participants</h2>
+        <Form onSubmit={addParticipant} submitButtonText="Add new" />
         <Table items={participants} />
       </div>
     </div>

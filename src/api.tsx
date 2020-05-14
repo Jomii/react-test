@@ -1,4 +1,4 @@
-// Participants displayed in the app
+// Imaginary participants gotten from an imaginary API
 export const api = {
   Participants: [
     { id: 1, name: "Janina Kaestner", email: "janina.kaestner@gmail.com", phoneNum: "0503253033" },

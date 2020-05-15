@@ -1,14 +1,19 @@
-import React, { useState } from 'react';
-import Table from './components/Table';
-import { Form, FormValues } from './components/Form';
-import { api } from './api';
-import './App.css';
+import React, { useState } from "react";
+import Table from "./components/Table";
+import { Form, FormValues } from "./components/Form";
+import { api } from "./api";
+import "./App.css";
 
 const App: React.FC = () => {
   const [participants, setParticipants] = useState(api.Participants);
 
-  function addParticipant(newParticipant: FormValues) {
-    console.log(newParticipant)
+  function addParticipant(participant: FormValues) {
+    let newParticipant = {
+      id: participants.length + 1,
+      ...participant,
+    };
+
+    setParticipants((participants) => [...participants, newParticipant]);
   }
 
   return (
@@ -21,6 +26,6 @@ const App: React.FC = () => {
       </div>
     </div>
   );
-}
+};
 
 export default App;

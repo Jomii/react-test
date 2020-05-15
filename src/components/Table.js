@@ -1,6 +1,10 @@
 import React from "react";
 
 function Table(props) {
+  const tableRows = props.items.map((item) => (
+    <TableRow key={item.id} item={item} onClick={props.onClick} />
+  ));
+
   return (
     <table className="table">
       <thead>
@@ -12,31 +16,32 @@ function Table(props) {
         </tr>
       </thead>
 
-      <TableRow tableItems={props.items} />
+      <tbody>{tableRows}</tbody>
     </table>
   );
 }
 
 function TableRow(props) {
-  const items = props.tableItems;
-  const tableItems = items.map((item) => (
-    <tr key={item.id}>
+  const item = props.item;
+  return (
+    <tr>
       <th scope="row">{item.name}</th>
       <th scope="row">{item.email}</th>
       <th scope="row">{item.phoneNum}</th>
       <th scope="row">
-        <IconButton icon={"/pencil.svg"} />
+        <IconButton
+          onClick={() => props.onClick(item.id)}
+          icon={"/pencil.svg"}
+        />
         <IconButton icon={"/trash.svg"} />
       </th>
     </tr>
-  ));
-
-  return <tbody>{tableItems}</tbody>;
+  );
 }
 
 function IconButton(props) {
   return (
-    <button type="button" className="btn btn-link">
+    <button type="button" className="btn btn-link" onClick={props.onClick}>
       <img src={props.icon} alt="button icon"></img>
     </button>
   );

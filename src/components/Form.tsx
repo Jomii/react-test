@@ -1,5 +1,6 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { validate, FieldType } from "../utils/Validator";
+import { Participant } from "../App";
 
 export interface FormValues {
   name: string;
@@ -10,6 +11,8 @@ export interface FormValues {
 interface FormProps {
   submitButtonText: string;
   onSubmit: (participant: FormValues) => void;
+  data?: Participant | null;
+  onCancel?: () => void;
 }
 
 export const Form: React.FC<FormProps> = (props) => {
@@ -21,6 +24,14 @@ export const Form: React.FC<FormProps> = (props) => {
     email: false,
     phoneNum: false,
   });
+
+  useEffect(() => {
+    if (props.data) {
+      setName(props.data.name);
+      setEmail(props.data.email);
+      setPhoneNum(props.data.phoneNum);
+    }
+  }, [props.data]);
 
   function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -35,13 +46,21 @@ export const Form: React.FC<FormProps> = (props) => {
 
       clearForm();
     }
-    console.log(errors);
   }
 
   function clearForm() {
     setName("");
     setEmail("");
     setPhoneNum("");
+    setErrors({
+      name: false,
+      email: false,
+      phoneNum: false
+    })
+
+    if (props.onCancel) {
+      props.onCancel();
+    }
   }
 
   /**
@@ -110,6 +129,14 @@ export const Form: React.FC<FormProps> = (props) => {
           </label>
         )}
       </div>
+
+      {props.onCancel && (
+        <div className="col">
+          <button type="button" className="btn btn-primary" onClick={clearForm}>
+            Cancel
+          </button>
+        </div>
+      )}
 
       <div className="col">
         <input

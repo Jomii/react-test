@@ -11,14 +11,16 @@ export interface Participant extends FormValues {
 const App: React.FC = () => {
   const [participants, setParticipants] = useState(api.Participants);
   const [selected, setSelected] = useState<Participant | null | undefined>(null);
+  const [nextId, setNextId] = useState(participants.length + 1);
 
   function addParticipant(participant: FormValues) {
     let newParticipant = {
-      id: participants.length + 1,
+      id: nextId,
       ...participant,
     };
 
     setParticipants((participants) => [...participants, newParticipant]);
+    setNextId(nextId + 1);
   }
 
   function setParticipant(id: number) {
@@ -39,13 +41,25 @@ const App: React.FC = () => {
     }
   }
 
+  function removeParticipant(id: number) {
+    const participant = participants.find(participant => participant.id === id) 
+    
+    if (participant) {
+      const participantIndex = participants.indexOf(participant);
+      let newParticipants = [...participants]
+      newParticipants.splice(participantIndex, 1)
+      
+      setParticipants(newParticipants)
+    }
+  }
+
   return (
     <div className="App">
       <h1>Header</h1>
       <div className="content">
         <h2>List of participants</h2>
         <Form onSubmit={addParticipant} submitButtonText="Add new" />
-        <Table items={participants} onClick={setParticipant}/>
+        <Table items={participants} onClick={setParticipant} onDelete={removeParticipant}/>
         <Form onSubmit={editParticipant} submitButtonText="Save" data={selected} onCancel={() => setSelected(null)} />
       </div>
     </div>

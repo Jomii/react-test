@@ -1,17 +1,64 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 
 function Table(props) {
-  const tableRows = props.items.map((item) => (
-    <TableRow key={item.id} item={item} onClick={props.onClick} />
-  ));
+  const [items, setItems] = useState(props.items);
+  const [sortedBy, setSortedBy] = useState("name");
+  const [ascending, isAscending] = useState(true);
+
+  useEffect(() => {
+    setItems(props.items);
+  }, [props.items]);
+
+  function sortItems(e) {
+    const types = {
+      name: "name",
+      email: "email",
+      phoneNum: "phoneNum",
+    };
+
+    const sortProperty = types[e.target.id];
+
+    if (sortProperty !== sortedBy) {
+      // Set to ascending order when changing sort property
+      isAscending(true);
+    } else {
+      isAscending(!ascending);
+    }
+
+    setSortedBy(sortProperty);
+  }
+
+  // Sort string values by sortedBy key in ascending/descending order
+  function itemSort(a, b) {
+    if (!ascending) return ("" + b[sortedBy]).localeCompare(a[sortedBy]);
+
+    return ("" + a[sortedBy]).localeCompare(b[sortedBy]);
+  }
+
+  const tableRows = items
+    .sort(itemSort)
+    .map((item) => (
+      <TableRow
+        key={item.id}
+        item={item}
+        onClick={props.onClick}
+        onDelete={props.onDelete}
+      />
+    ));
 
   return (
     <table className="table">
       <thead>
         <tr>
-          <th scope="col">Name</th>
-          <th scope="col">E-mail address</th>
-          <th scope="col">Phone number</th>
+          <th id="name" onClick={sortItems} scope="col">
+            Name
+          </th>
+          <th id="email" onClick={sortItems} scope="col">
+            E-mail address
+          </th>
+          <th id="phoneNum" onClick={sortItems} scope="col">
+            Phone number
+          </th>
           <th scope="col"></th>
         </tr>
       </thead>
@@ -33,7 +80,10 @@ function TableRow(props) {
           onClick={() => props.onClick(item.id)}
           icon={"/pencil.svg"}
         />
-        <IconButton icon={"/trash.svg"} />
+        <IconButton
+          onClick={() => props.onDelete(item.id)}
+          icon={"/trash.svg"}
+        />
       </th>
     </tr>
   );

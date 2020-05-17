@@ -1,4 +1,8 @@
 import React, { useState, useEffect } from "react";
+import arrowUp from "../icons/arrow-up-short.svg";
+import arrowDown from "../icons/arrow-down-short.svg";
+import pencilIcon from "../icons/pencil.svg";
+import trashIcon from "../icons/trash.svg";
 
 function Table(props) {
   const [items, setItems] = useState(props.items);
@@ -46,7 +50,7 @@ function Table(props) {
       />
     ));
   
-  const arrow = (<span className="arrow"><img src={ascending ? "/arrow-up-short.svg" : "/arrow-down-short.svg"} alt="arrow icon"></img></span>)
+  const arrow = (<span className="arrow"><img src={ascending ? arrowUp : arrowDown} alt="arrow icon"></img></span>)
 
   return (
     <div className="table-responsive  mt-2 ">
@@ -85,11 +89,11 @@ function TableRow(props) {
         <div className="float-right">
           <IconButton
             onClick={() => props.onClick(item.id)}
-            icon={"/pencil.svg"}
+            icon={pencilIcon}
           />
           <IconButton
             onClick={() => props.onDelete(item.id)}
-            icon={"/trash.svg"}
+            icon={trashIcon}
           />
         </div>
       </td>

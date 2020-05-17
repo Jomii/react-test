@@ -13,6 +13,7 @@ interface FormProps {
   onSubmit: (participant: FormValues) => void;
   data?: Participant | null;
   onCancel?: () => void;
+  secondaryStyle?: boolean;
 }
 
 export const Form: React.FC<FormProps> = (props) => {
@@ -55,8 +56,8 @@ export const Form: React.FC<FormProps> = (props) => {
     setErrors({
       name: false,
       email: false,
-      phoneNum: false
-    })
+      phoneNum: false,
+    });
 
     if (props.onCancel) {
       props.onCancel();
@@ -80,8 +81,10 @@ export const Form: React.FC<FormProps> = (props) => {
     );
   }
 
+  const customStyle = props.secondaryStyle ? {color: "#757575", backgroundColor: "#EBEBEB", border: "none"} : {};
+
   return (
-    <form onSubmit={handleSubmit} className="form-row">
+    <form onSubmit={handleSubmit} className="form-row bg-white">
       <div className="col">
         <input
           type="text"
@@ -98,7 +101,7 @@ export const Form: React.FC<FormProps> = (props) => {
         )}
       </div>
 
-      <div className="form-group col">
+      <div className="col">
         <input
           type="email"
           className="form-control"
@@ -114,7 +117,7 @@ export const Form: React.FC<FormProps> = (props) => {
         )}
       </div>
 
-      <div className="col">
+      <div className="form-group col">
         <input
           type="text"
           className="form-control"
@@ -130,20 +133,23 @@ export const Form: React.FC<FormProps> = (props) => {
         )}
       </div>
 
-      {props.onCancel && (
-        <div className="col">
-          <button type="button" className="btn btn-primary" onClick={clearForm}>
-            Cancel
-          </button>
-        </div>
-      )}
-
-      <div className="col">
+      <div className="col pr-0">
         <input
           type="submit"
-          className="btn btn-primary"
+          className="btn btn-primary float-right ml-2"
+          style={customStyle}
           value={props.submitButtonText}
         />
+
+        {props.onCancel && (
+          <button
+            type="button"
+            className="btn btn-secondary float-right"
+            onClick={clearForm}
+          >
+            Cancel
+          </button>
+        )}
       </div>
     </form>
   );

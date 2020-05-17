@@ -55,10 +55,16 @@ const App: React.FC = () => {
 
   return (
     <div className="App">
-      <h1>Header</h1>
-      <div className="content">
-        <h2>List of participants</h2>
-        <Form onSubmit={addParticipant} submitButtonText="Add new" />
+      <nav className="navbar">
+        <div className="navbar-brand" >
+          <div className="logo d-inline-block align-bottom mr-3"></div>
+          Nord Software
+        </div>
+      </nav>
+
+      <div className="content mt-5">
+        <h3 className="mb-4">List of participants</h3>
+        <Form onSubmit={addParticipant} submitButtonText="Add new" secondaryStyle={true} />
         <Table items={participants} onClick={setParticipant} onDelete={removeParticipant}/>
         <Form onSubmit={editParticipant} submitButtonText="Save" data={selected} onCancel={() => setSelected(null)} />
       </div>

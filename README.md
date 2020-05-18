@@ -2,13 +2,20 @@
 
 A React implementation for showing a list of participants and modifying list data.
 
-Bootstrap was used for styling and icons.
+[Bootstrap](https://getbootstrap.com/) was used for styling and icons.
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
-## Available Scripts
+## Installing
 
-In the project directory, you can run:
+Clone the repository and <br />
+in the project directory, run:
+
+### `npm install`
+
+To install required dependencies.
+
+Then you can run:
 
 ### `npm start`
 

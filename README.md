@@ -2,6 +2,8 @@
 
 A React implementation for showing a list of participants and modifying list data.
 
+[Live demo](https://www.sis.uta.fi/~mj427655/react-test/)
+
 [Bootstrap](https://getbootstrap.com/) was used for styling and icons.
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
